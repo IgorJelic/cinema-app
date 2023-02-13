@@ -1,0 +1,148 @@
+.homeContent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    min-height: 88vh;
+    max-height: 88vh;
+    width: 100vw;
+    user-select: none;
+
+    overflow-y: auto;
+}
+
+.homeContent h1{
+    font-size: 50px;
+}
+
+.screeningCard{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    background-color: #333333;
+    color: white;
+    border: 2px solid black;
+    height: 300px;
+    width: 900px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+.screeningCard:first-child{
+    margin-top: 20px;
+}
+
+.screeningCard:last-child{
+    margin-bottom: 50px;
+}
+
+.imgWrapper{
+    height: 280px;
+    /* padding: 20px; */
+    width: 200px;
+    border-right: 2px solid black;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.imgWrapper img{
+    height: 100%;
+    width: 100%;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    /* padding: 20px; */
+}
+
+.cardContent{
+    padding: 0px 10px;
+    width: 75%;
+    /* border: 1px solid greenyellow; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cardContent .left{
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+}
+
+.cardContent .right{
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    /* border: 1px solid blue; */
+    width: 380px;
+    height: 260px;
+    border-left: 1px solid #575757;
+}
+
+.cardContent .right .screening{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #bcbcbc;
+    width: 80%;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+
+.cardContent .right .screening:hover{
+    background-color: #444444;
+}
+
+.cardContent .right .screening .screeningP{
+    margin: 6px;
+}
+
+.homeContent .heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* border: 1px solid blue; */
+    width: 800px;
+}
+
+.homeContent .heading h1{
+    margin-right: 80px;
+    margin-left: 80px;
+}
+
+.homeContent .heading select{
+    height: 40px;
+    width: 180px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 18px;
+    border: 1px solid black;
+    margin-right: 10px;
+
+
+    cursor: pointer;
+}
+
+.homeContent .heading select:hover{
+    background-color: #f0f0f0;
+}
+
+.homeContent .heading select option{
+    background-color: #333333;
+    color: white;
+    cursor: pointer;
+}
+
+.genreCard{
+    display: inline;
+    margin: 4px 8px;
+    padding: 4px;
+    border-radius: 4px;
+    background-color: #03AA6D;
+    color: white;
+}

@@ -1,0 +1,23 @@
+.pagination{
+    display: flex;
+    flex-direction: row;
+}
+
+.paginationBtn{
+    background-color: white;
+    color: rgb(52, 52, 52);
+    border-radius: 50%;
+    height: 26px;
+    width: 26px;
+    margin-right: 4px;
+    cursor: pointer;
+}
+
+.paginationBtn:hover{
+    background-color: rgb(220, 220, 220);
+}
+
+.paginationBtn.active{
+    background-color: rgb(52, 52, 52);
+    color: white;
+}

@@ -1,0 +1,41 @@
+nav{
+    height: 6vh;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    user-select: none;
+}
+
+li:first-child{
+    margin-left: 5vw;
+}
+
+li:last-child{
+    margin-right: 5vw;
+}
+  
+li {
+    float: left;
+}
+  
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.right{
+    float: right;
+}
+  
+li a:hover {
+    background-color: #111;
+}
