@@ -104,9 +104,8 @@ public sealed class UserService : IUserService
         _repositoryManager.UserRepository.Insert(newUser);
         await _repositoryManager.UnitOfWork.SaveChangesAsync();
 
-        string message;
         var verifyUrl = $"https://localhost:5001/api/users/verify/{verificationToken}";
-            message = $@"<p>Please click the below link to verify your email address:</p>
+        string message = $@"<p>Please click the below link to verify your email address:</p>
                             <p><a href=""{verifyUrl}"">{verifyUrl}</a></p>";
 
         var body = $"<h4>Verify Email</h4><p>Thanks for registering!</p>{message}";

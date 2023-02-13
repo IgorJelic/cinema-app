@@ -9,7 +9,7 @@ export default function ScreeningCard({
     const navigate = useNavigate();
 
     function goToReserePage(screening){
-        const screeningTime = new Date(screening.screeningTime);
+        let screeningTime = new Date(screening.screeningTime);
         if(screeningTime < new Date()){
             ToastifyService.notifyInfo('Too late! Screening already started.')
         }

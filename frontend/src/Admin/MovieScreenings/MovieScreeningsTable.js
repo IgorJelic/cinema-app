@@ -39,10 +39,10 @@ export default function MovieScreeningsTable({data, remove, update}){
 
     const tableContent = data.map(screening => {
         const imgSrc = `${process.env.REACT_APP_RESOURCES_URL}/${screening.movie.posterImage}`;
-        const seatsAvailable = screening.seats.filter(seat => {
-            if(seat.available) return seat;
-            else return null;
-        })
+        let seatsAvailableCntr = 0;
+        for(let i = 0; i < screening.seats.length; i++){
+            if(screening.seats[i].available) seatsAvailableCntr++;
+        }
         const dateTime = new Date(screening.screeningTime)
             .toLocaleString('en-GB', 
                 { 
@@ -58,7 +58,7 @@ export default function MovieScreeningsTable({data, remove, update}){
                     <td>{screening.movie.name}</td>
                     <td>{dateTime}</td>
                     <td>{screening.ticketPrice}din</td>
-                    <td>{seatsAvailable.length}</td>
+                    <td>{seatsAvailableCntr}</td>
                     <td><button onClick={() => updateOnClick(screening.id)}>Update</button></td>
                     <td><button onClick={() => removeOnClick(screening.id)}>Delete</button></td>
                 </tr>

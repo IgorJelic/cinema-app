@@ -24,7 +24,7 @@ public sealed class MovieScreeningService : IMovieScreeningService
 
     public async Task<(IEnumerable<MovieScreeningDto> items, int screeningsCount)> GetAllAsync(GetAllScreeningsDto dto)
     {
-        var screeningsTuple = await _repositoryManager.MovieScreeningRepository.GetAllAsync(dto);
+        var screeningsTuple = await _repositoryManager.MovieScreeningRepository.GetAllAsync(dto, withSeats: true);
         var screeningsDto = screeningsTuple.items.Adapt<IEnumerable<MovieScreeningDto>>();
         return (screeningsDto, screeningsTuple.screeningsCount);
     }

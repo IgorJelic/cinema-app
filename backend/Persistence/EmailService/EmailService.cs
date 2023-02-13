@@ -25,6 +25,7 @@ public class EmailService : IEmailService
         email.Body = new TextPart(TextFormat.Html) { Text = html };
 
         using var smtp = new SmtpClient();
+        smtp.CheckCertificateRevocation = false;
         smtp.Connect(_appSettings.SmtpHost, _appSettings.SmtpPort, SecureSocketOptions.StartTls);
         smtp.Authenticate(_appSettings.SmtpUser, _appSettings.SmtpPass);
         smtp.Send(email);

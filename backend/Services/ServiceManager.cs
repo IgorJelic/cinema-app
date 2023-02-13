@@ -19,7 +19,7 @@ public sealed class ServiceManager : IServiceManager
         _lazyMovieService = new Lazy<IMovieService>(() => new MovieService(repositoryManager));
         _lazyMovieScreeningService = new Lazy<IMovieScreeningService>(() => new MovieScreeningService(repositoryManager));
         _lazyUserService = new Lazy<IUserService>(() => new UserService(repositoryManager, emailService));
-        _lazyReservationService = new Lazy<IReservationService>(() => new ReservationService(repositoryManager, httpContextAccessor));
+        _lazyReservationService = new Lazy<IReservationService>(() => new ReservationService(repositoryManager, httpContextAccessor, emailService));
     }
 
     public IGenreService GenreService => _lazyGenreService.Value;

@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import ToastifyService from "../CommonServices/Toastify/ToastifyService"
 import UserService from "../API/Services/UserService"
@@ -10,6 +10,10 @@ export default function Login(){
     let password = useRef(null);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        username.current.focus();
+    }, [])
 
     function submitForm(e){
         e.preventDefault();

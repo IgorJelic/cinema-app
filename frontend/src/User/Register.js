@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import ValidationService from "../CommonServices/Validators/ValidationService";
 import ToastifyService from "../CommonServices/Toastify/ToastifyService";
@@ -14,6 +14,10 @@ export default function Register(){
     let role = useRef(null);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        username.current.focus();
+    }, [])
 
     function submitForm(e){
         e.preventDefault();

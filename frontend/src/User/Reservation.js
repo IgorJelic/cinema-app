@@ -5,6 +5,8 @@ import ToastifyService from "../CommonServices/Toastify/ToastifyService";
 import styles from '../Layout/Styles/Reservation.module.css';
 import SeatReservation from "./SeatReservation";
 import ReservationService from "../API/Services/ReservationService";
+import ModalLayout from "../Admin/ModalLayout";
+import { MODAL_TYPE } from "../API/Common";
 
 
 export default function Reservation(){
@@ -13,6 +15,8 @@ export default function Reservation(){
     const[screeningImg, setScreeningImg] = useState('');
     const[movieName, setMovieName] = useState('');
     const[seats, setSeats]=useState([]);
+    const[showConfirmModal, setShowConfirmModal] = useState(false);
+
 
     const[selectedSeats, setSelectedSeats] = useState([]);
     const[ticketCount, setTicketCount] = useState(1);
@@ -42,34 +46,47 @@ export default function Reservation(){
             })
     }, [])
 
-    function createReservation(){
-        if(ticketCount > selectedSeats.length){
-            ToastifyService.notifyInfo(`Select ${ticketCount - selectedSeats.length} more seats.`)
+    function toggleShowConfirmModal(){
+        if(!showConfirmModal){
+            if(ticketCount > selectedSeats.length){
+                ToastifyService.notifyInfo(`Select ${ticketCount - selectedSeats.length} more seats.`)
+            }
+            else if(isGuest && emailInput.current.value === ''){
+                ToastifyService.notifyInfo(`User email required.`)
+                emailInput.current.focus()
+            }
+            else{
+                setShowConfirmModal(true);
+            }
         }
         else{
-            const movieScreeningId = screening.id;
-            let seatIds = [];
+            setShowConfirmModal(!showConfirmModal);
+        }
+    }
 
-            selectedSeats.forEach(seat => {
-                seatIds.push(seat.id);
-            });
+    function createReservation(){
+        const movieScreeningId = screening.id;
+        let seatIds = [];
 
-            const reservationDto = {
-                userEmail: emailInput.current.value,
-                totalPrice: screening.ticketPrice * ticketCount,
-                movieScreening: movieScreeningId,
-                chosenSeats: seatIds
-            }
+        selectedSeats.forEach(seat => {
+            seatIds.push(seat.id);
+        });
 
-            ReservationService.add(reservationDto)
-            .then((data) => {
-                ToastifyService.notifySucc('Reservation added succesfully!');
-                navigate('/');
-            })
-            .catch(error => {
-                ToastifyService.notifyErr(`${error}`);
-            })            
-        }        
+        const reservationDto = {
+            userEmail: emailInput.current.value,
+            totalPrice: screening.ticketPrice * ticketCount,
+            movieScreening: movieScreeningId,
+            chosenSeats: seatIds
+        }
+
+        ReservationService.add(reservationDto)
+        .then((data) => {
+            ToastifyService.notifySucc('Reservation added succesfully!');
+            navigate('/');
+        })
+        .catch(error => {
+            ToastifyService.notifyErr(`${error}`);
+        })            
     }
 
     function incTicketCount(){
@@ -122,7 +139,8 @@ export default function Reservation(){
                     />
                 <div style={{marginTop:'20px'}}>
                     <input style={{display:emailStyle}} className={styles.emailInput} type='email' placeholder="E-mail" ref={emailInput}/>
-                    <button onClick={createReservation}>Create</button>
+                    <button onClick={() => {toggleShowConfirmModal()}}>Create</button>
+                    {/* <button onClick={createReservation}>Create</button> */}
                 </div>
             </div>
         </div>
@@ -131,6 +149,14 @@ export default function Reservation(){
     return(
         <>
             {content}
+            <ModalLayout
+            show={showConfirmModal}
+            onCloseButtonClick={toggleShowConfirmModal}
+            onConfirmButtonClick={createReservation}
+            modalType={MODAL_TYPE.confirmation}
+            title="Reservation"
+            body="Confirm reservation?"
+        />
         </>
     )
 

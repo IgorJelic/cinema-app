@@ -2,6 +2,7 @@ using Contracts;
 using Services.Abstractions;
 using Domain.Repositories;
 using Domain.Entities;
+using Domain.EmailService;
 using Domain.Exceptions.Reservation;
 using Mapster;
 using Domain.Exceptions.MovieScreening;
@@ -14,9 +15,11 @@ public class ReservationService : IReservationService
 
     private readonly IRepositoryManager _repositoryManager;
     private readonly IHttpContextAccessor _httpContextAccessor;
-    public ReservationService(IRepositoryManager repositoryManager, IHttpContextAccessor httpContextAccessor){
+    private readonly IEmailService _emailService;
+    public ReservationService(IRepositoryManager repositoryManager, IHttpContextAccessor httpContextAccessor, IEmailService emailService){
         _repositoryManager = repositoryManager;
         _httpContextAccessor = httpContextAccessor;
+        _emailService = emailService;
     }
     
 
@@ -71,6 +74,13 @@ public class ReservationService : IReservationService
         await _repositoryManager.UnitOfWork.SaveChangesAsync();
 
         // Posalji mejl korisniku u kom saljes da je uspesno rezervisao
+        var emailTo = newReservation.UserEmail;
+        string message = $@"<p>Reservation screening: {newReservation.MovieScreening.Movie.Name}</p>
+                            <p>Time of screening: {newReservation.MovieScreening.ScreeningTime.ToUniversalTime()}</p>";
+
+        var body = $"<h4>Reservation completed</h4><p>Reservation ID = [{newReservation.Id}]</p>{message}";
+
+        _emailService.Send(emailTo, "Ticket Reservation - Success", body);
 
         return newReservation.Adapt<ReservationDto>();
     }

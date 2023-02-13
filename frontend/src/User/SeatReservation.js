@@ -13,18 +13,8 @@ export default function SeatReservation({
     ticketCount,
     seatClick
 }){
-    // const[ticketCount, setTicketCount] = useState(1);
     const finalPrice = localStorage.getItem('token') === null ? price : price - Math.round(price * 0.05);
     const discountMessage = localStorage.getItem('token') === null ? <></> : <code className={styles.discountMessage}><i>5% discount</i></code>;
-
-    // function incTicketCount(){
-    //     if(ticketCount < 5) setTicketCount(ticketCount + 1);
-    //     else ToastifyService.notifyInfo("Max tickets reached.");
-    // }
-    // function decTicketCount(){
-    //     if(ticketCount > 1) setTicketCount(ticketCount - 1);
-    //     else ToastifyService.notifyInfo("Min tickets reached.");
-    // }
 
     return(
         <>
