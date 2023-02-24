@@ -4,6 +4,7 @@ import ToastifyService from "../CommonServices/Toastify/ToastifyService"
 import UserService from "../API/Services/UserService"
 import ValidationService from "../CommonServices/Validators/ValidationService"
 import styles from '../Layout/Styles/Form.module.css'
+import UserTokenService from "../CommonServices/UserTokenService"
 
 export default function Login(){
     let username = useRef(null);
@@ -12,7 +13,9 @@ export default function Login(){
     const navigate = useNavigate();
 
     useEffect(() => {
-        username.current.focus();
+        const token = UserTokenService.getToken();
+        if(token !== null) navigate('/');
+        else username.current.focus();
     }, [])
 
     function submitForm(e){
@@ -27,7 +30,7 @@ export default function Login(){
             UserService.login(login)
                 .then((data) => {
                     localStorage.setItem('token', data.token);
-                    navigate('/');
+                    window.location.reload();
                 })
                 .catch(error => {
                     ToastifyService.notifyErr(`${error}`);
